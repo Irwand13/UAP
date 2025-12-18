@@ -34,19 +34,26 @@ public class TransactionDialog extends JDialog {
 
         panel.add(new JLabel("Tipe"));
         panel.add(cbType);
+
         panel.add(new JLabel("Nominal"));
         panel.add(txtAmount);
+
         panel.add(new JLabel("Kategori"));
         panel.add(txtCategory);
+
         panel.add(new JLabel("Catatan"));
+        panel.add(txtNote); // 🔴 INI YANG KURANG
+
         return panel;
     }
+
 
     private JPanel buildButton(MainFrame mainFrame) {
         JPanel panel = new JPanel();
 
         JButton btnSave = new JButton("Simpan");
         btnSave.addActionListener(e -> save(mainFrame));
+
 
         panel.add(btnSave);
         return panel;
