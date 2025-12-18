@@ -10,6 +10,7 @@
   <name>CekelDuit</name>
   <url>http://maven.apache.org</url>
 
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -26,6 +27,11 @@
           <artifactId>junit-jupiter</artifactId>
           <version>5.10.0</version>
           <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>com.google.code.gson</groupId>
+          <artifactId>gson</artifactId>
+          <version>2.10.1</version>
       </dependency>
   </dependencies>
 </project>

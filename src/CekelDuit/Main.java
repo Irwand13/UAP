@@ -1,11 +1,13 @@
 package CekelDuit;
 
-import CekelDuit.ui.HomeFrame;
+import CekelDuit.ui.HomePanel;
+import CekelDuit.ui.MainFrame;
 
 public class Main {
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {
-            new HomeFrame().setVisible(true);
+            new MainFrame().setVisible(true);
         });
     }
 }
+
