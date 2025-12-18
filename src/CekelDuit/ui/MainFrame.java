@@ -10,6 +10,9 @@ import java.util.List;
 public class MainFrame extends JFrame {
 
     private double saldo = 0;
+    private HistoryPanel historyPanel;
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
     private String username = "Pengguna";
     private final List<Transaction> transactions = new ArrayList<>();
 
@@ -20,9 +23,16 @@ public class MainFrame extends JFrame {
         setSize(420, 700);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
 
         homePanel = new HomePanel(this);
-        setContentPane(homePanel);
+        historyPanel = new HistoryPanel(this);
+
+        mainPanel.add(homePanel, "HOME");
+        mainPanel.add(historyPanel, "HISTORY");
+
+        setContentPane(mainPanel);
     }
 
     // ===== LOGIC INTI =====
@@ -38,6 +48,7 @@ public class MainFrame extends JFrame {
 
     private void refreshAll() {
         homePanel.refresh();
+        historyPanel.refresh();
     }
 
     // ===== GETTER =====
@@ -62,4 +73,14 @@ public class MainFrame extends JFrame {
         this.username = username;
         refreshAll();
     }
+    public void showHome() {
+        homePanel.refresh();
+        cardLayout.show(mainPanel, "HOME");
+    }
+
+    public void showHistory() {
+        historyPanel.refresh();
+        cardLayout.show(mainPanel, "HISTORY");
+    }
+
 }

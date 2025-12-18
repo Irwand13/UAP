@@ -48,6 +48,9 @@ public class HomePanel extends JPanel {
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panel.setOpaque(false);
 
+        JButton btnHistory = new JButton("📊 Lihat Riwayat");
+        btnHistory.addActionListener(e -> mainFrame.showHistory());
+
         JButton btnAdd = new JButton("➕ Catat Transaksi");
         btnAdd.addActionListener(e -> {
             TransactionDialog dialog =
