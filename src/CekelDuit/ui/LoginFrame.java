@@ -1,6 +1,7 @@
 package CekelDuit.ui;
 
 import CekelDuit.model.User;
+import CekelDuit.model.UserRepository;
 import CekelDuit.service.AuthService;
 
 import javax.swing.*;
@@ -49,9 +50,8 @@ public class LoginFrame extends JFrame {
             return;
         }
 
-        User user = AuthService.login(id, name);
-
-        dispose(); // tutup login
+        User user = UserRepository.load(id, name);
         new MainFrame(user).setVisible(true);
+        dispose(); // tutup login
     }
 }
