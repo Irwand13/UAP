@@ -1,110 +1,97 @@
 package CekelDuit.ui;
 
 import CekelDuit.model.Transaction;
+import CekelDuit.model.User;
 import CekelDuit.utill.CurencyUtill;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class HomePanel extends JPanel {
 
-    private final MainFrame mainFrame;
-
-    private JLabel lblSaldo;
+    private JLabel lblName, lblSaldo;
     private JPanel historyPanel;
 
-    public HomePanel(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
+    public HomePanel() {
         setLayout(new BorderLayout());
-        setBackground(Color.WHITE);
+        setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        setBackground(new Color(245,245,245));
 
         add(buildHeader(), BorderLayout.NORTH);
-        add(buildContent(), BorderLayout.CENTER);
+        add(buildHistoryCard(), BorderLayout.CENTER);
     }
 
     private JPanel buildHeader() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(new Color(0, 150, 136));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        JPanel card = new JPanel();
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+        card.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        card.setBackground(new Color(0, 150, 136));
 
-        JLabel lblTitle = new JLabel("Saldo Kamu");
-        lblTitle.setForeground(Color.WHITE);
+        lblName = new JLabel("-");
+        lblName.setForeground(Color.WHITE);
+        lblName.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
         lblSaldo = new JLabel("Rp 0");
-        lblSaldo.setFont(new Font("Segoe UI", Font.BOLD, 26));
         lblSaldo.setForeground(Color.WHITE);
+        lblSaldo.setFont(new Font("Segoe UI", Font.BOLD, 30));
 
-        panel.add(lblTitle);
-        panel.add(Box.createVerticalStrut(8));
-        panel.add(lblSaldo);
+        card.add(lblName);
+        card.add(Box.createVerticalStrut(8));
+        card.add(lblSaldo);
 
-        return panel;
+        return card;
     }
 
-    private JPanel buildContent() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setOpaque(false);
-
-        JButton btnAdd = new JButton("➕ Catat Transaksi");
-        btnAdd.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
-        btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 14));
-
-        btnAdd.addActionListener(e -> {
-            TransactionDialog dialog = new TransactionDialog(mainFrame);
-            dialog.setVisible(true);
-        });
-
-        panel.add(btnAdd);
-        panel.add(Box.createVerticalStrut(20));
-
-        // CARD Riwayat
+    private JPanel buildHistoryCard() {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(220, 220, 220)),
-                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+                BorderFactory.createLineBorder(Color.LIGHT_GRAY),
+                BorderFactory.createEmptyBorder(15,15,15,15)
         ));
         card.setBackground(Color.WHITE);
 
-        JLabel title = new JLabel("Transaksi Terakhir");
+        JLabel title = new JLabel("Riwayat Transaksi");
         title.setFont(new Font("Segoe UI", Font.BOLD, 14));
 
         historyPanel = new JPanel();
         historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
-        historyPanel.setOpaque(false);
+        historyPanel.setBackground(Color.WHITE);
 
         card.add(title);
         card.add(Box.createVerticalStrut(10));
         card.add(historyPanel);
+        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 260));
 
-        panel.add(card);
-
-        return panel;
+        return card;
     }
 
-    // ===== REFRESH UI =====
-    public void refresh() {
-        lblSaldo.setText(
-                CurencyUtill.format(mainFrame.getSaldo())
-        );
+    // 🔴 INI KUNCI UTAMA
+    public void update(User user) {
+        lblName.setText("Halo, " + user.getName());
+        lblSaldo.setText(CurencyUtill.format(user.getBalance()));
 
         historyPanel.removeAll();
 
-        if (mainFrame.getTransactions().isEmpty()) {
+        List<Transaction> list = user.getTransactions()
+                .stream()
+                .limit(10)
+                .toList();
+
+        if (list.isEmpty()) {
             historyPanel.add(new JLabel("Belum ada transaksi"));
         } else {
-            for (Transaction tx : mainFrame.getLatestTransactions(3)) {
+            for (Transaction tx : list) {
                 JLabel lbl = new JLabel(
-                        (tx.getType().equals("Pemasukan") ? "➕ " : "➖ ")
+                        (tx.isIncome() ? "➕ " : "➖ ")
                                 + tx.getCategory()
-                                + " - "
+                                + "   "
                                 + CurencyUtill.format(tx.getAmount())
                 );
+                lbl.setFont(new Font("Segoe UI", Font.PLAIN, 13));
                 historyPanel.add(lbl);
-                historyPanel.add(Box.createVerticalStrut(5));
+                historyPanel.add(Box.createVerticalStrut(6));
             }
         }
 
