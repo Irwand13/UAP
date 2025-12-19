@@ -1,6 +1,7 @@
 package CekelDuit.ui;
 
 import CekelDuit.model.Transaction;
+import CekelDuit.model.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,11 +18,12 @@ public class MainFrame extends JFrame {
     private final List<Transaction> transactions = new ArrayList<>();
     private HomePanel homePanel;
     private ProfilePanel profilePanel;
+    private TransactionPanel transactionPanel;
 
 
-    public MainFrame() {
+    public MainFrame(User user) {
         setTitle("CekelDuit");
-        setSize(420, 700);
+        setSize(420, 650);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         cardLayout = new CardLayout();
@@ -29,10 +31,13 @@ public class MainFrame extends JFrame {
         profilePanel = new ProfilePanel(this);
         homePanel = new HomePanel(this);
         historyPanel = new HistoryPanel(this);
+        transactionPanel = new TransactionPanel(this);
 
         mainPanel.add(homePanel, "HOME");
+        mainPanel.add(transactionPanel, "TX");
         mainPanel.add(historyPanel, "HISTORY");
         mainPanel.add(profilePanel, "PROFILE");
+
 
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
@@ -47,12 +52,15 @@ public class MainFrame extends JFrame {
         JButton btnHome = new JButton("🏠 Home");
         JButton btnHistory = new JButton("📊 Riwayat");
         JButton btnProfile = new JButton("👤 Profil");
+        JButton btnTx = new JButton(" + Transaksi");
 
         btnHome.addActionListener(e -> showHome());
         btnHistory.addActionListener(e -> showHistory());
         btnProfile.addActionListener(e -> showProfile());
+        btnTx.addActionListener(e -> showTransaction());
 
         nav.add(btnHome);
+        nav.add(btnTx);
         nav.add(btnHistory);
         nav.add(btnProfile);
 
@@ -111,5 +119,8 @@ public class MainFrame extends JFrame {
     public void showProfile() {
         profilePanel.refresh();
         cardLayout.show(mainPanel, "PROFILE");
+    }
+    public void showTransaction() {
+        cardLayout.show(mainPanel, "TRANSAKSI");
     }
 }
