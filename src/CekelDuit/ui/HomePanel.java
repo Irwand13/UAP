@@ -10,10 +10,13 @@ import java.util.List;
 
 public class HomePanel extends JPanel {
 
+    private MainFrame mainFrame;
     private JLabel lblName, lblSaldo;
     private JPanel historyPanel;
 
-    public HomePanel() {
+    public HomePanel(MainFrame mainFrame) {
+        this.mainFrame = mainFrame ;
+
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         setBackground(new Color(245,245,245));
