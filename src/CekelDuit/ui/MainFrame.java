@@ -2,6 +2,7 @@ package CekelDuit.ui;
 
 import CekelDuit.model.Transaction;
 import CekelDuit.model.User;
+import CekelDuit.model.UserRepository;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,8 +32,8 @@ public class MainFrame extends JFrame {
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
         profilePanel = new ProfilePanel(this);
-        homePanel = new HomePanel();
-        historyPanel = new HistoryPanel();
+        homePanel = new HomePanel(this);
+        historyPanel = new HistoryPanel(this);
         transactionPanel = new TransactionPanel(this);
 
         mainPanel.add(homePanel, "HOME");
@@ -49,7 +50,7 @@ public class MainFrame extends JFrame {
 
     }
     private JPanel buildBottomNav() {
-        JPanel nav = new JPanel(new GridLayout(1, 3));
+        JPanel nav = new JPanel(new GridLayout(1, 4));
 
         JButton btnHome = new JButton("🏠 Home");
         JButton btnHistory = new JButton("📊 Riwayat");
@@ -80,6 +81,7 @@ public class MainFrame extends JFrame {
         }
 
         user.getTransactions().remove(index);
+        UserRepository.save(user);
         refreshAll();
     }
 
@@ -90,6 +92,8 @@ public class MainFrame extends JFrame {
                 new TransactionDialog(this, oldTx, index);
 
         dialog.setVisible(true);
+        UserRepository.save(user);
+        refreshAll();
     }
 
 
@@ -108,8 +112,8 @@ public class MainFrame extends JFrame {
 
         // 3. Update tampilan Home
         homePanel.update(user);
-
-        // 4. (opsional nanti) simpan ke JSON
+        UserRepository.save(user);
+        refreshAll();
     }
 
     public void updateTransaction(int index, Transaction newTx) {
@@ -177,7 +181,7 @@ public class MainFrame extends JFrame {
         cardLayout.show(mainPanel, "PROFILE");
     }
     public void showTransaction() {
-        cardLayout.show(mainPanel, "TRANSAKSI");
+        cardLayout.show(mainPanel, "TX");
     }
     public User getUser() {
         return user;

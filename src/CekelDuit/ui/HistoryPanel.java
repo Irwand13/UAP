@@ -15,8 +15,9 @@ public class HistoryPanel extends JPanel {
     private JButton btnEdit, btnDelete;
     private MainFrame mainFrame;
 
-    public HistoryPanel() {
+    public HistoryPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         setBackground(Color.WHITE);
