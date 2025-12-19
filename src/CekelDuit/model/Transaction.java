@@ -17,4 +17,8 @@ public class Transaction {
     public double getAmount() { return amount; }
     public String getCategory() { return category; }
     public String getNote() { return note; }
+
+    public boolean isIncome() {
+        return type.equalsIgnoreCase("Pemasukan");
+    }
 }

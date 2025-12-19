@@ -11,8 +11,10 @@ public class TransactionDialog extends JDialog {
     private JTextField txtAmount;
     private JTextField txtCategory;
     private JTextField txtNote;
+    private int editIndex ;
 
-    public TransactionDialog(MainFrame mainFrame) {
+    public TransactionDialog(MainFrame mainFrame,Transaction tx, int index) {
+        this.editIndex = index;
         setTitle("Tambah Transaksi");
         setSize(350, 300);
         setLocationRelativeTo(mainFrame);
@@ -21,6 +23,15 @@ public class TransactionDialog extends JDialog {
 
         add(buildForm(), BorderLayout.CENTER);
         add(buildButton(mainFrame), BorderLayout.SOUTH);
+
+        cbType.setSelectedItem(tx.getType());
+        txtAmount.setText(String.valueOf(tx.getAmount()));
+        txtCategory.setText(tx.getCategory());
+        txtNote.setText(tx.getNote());
+    }
+
+    public TransactionDialog(MainFrame mainFrame) {
+
     }
 
     private JPanel buildForm() {
@@ -72,9 +83,13 @@ public class TransactionDialog extends JDialog {
                 return;
             }
 
-            mainFrame.addTransaction(
-                    new Transaction(type, amount, category, note)
-            );
+            Transaction tx = new Transaction(type, amount, category, note);
+
+            if (editIndex >= 0) {
+                mainFrame.updateTransaction(editIndex, tx);
+            } else {
+                mainFrame.addTransaction(tx);
+            }
 
             dispose();
 
@@ -83,4 +98,5 @@ public class TransactionDialog extends JDialog {
                     "Nominal harus angka");
         }
     }
+
 }

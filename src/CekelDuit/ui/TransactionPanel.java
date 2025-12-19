@@ -5,8 +5,10 @@ import java.awt.*;
 
 public class TransactionPanel extends JPanel {
     private TransactionPanel transactionPanel;
+    private MainFrame mainFrame;
 
     public TransactionPanel(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
