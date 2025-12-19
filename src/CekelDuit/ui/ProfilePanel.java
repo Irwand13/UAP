@@ -23,15 +23,19 @@ public class ProfilePanel extends JPanel {
     }
 
     private JPanel buildHeader() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel card = new JPanel();
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+        card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(220,220,220)),
+                BorderFactory.createEmptyBorder(15,15,15,15)
+        ));
+        card.setBackground(Color.WHITE);
 
-        lblName = new JLabel("Nama");
-        lblName.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblName = new JLabel();
+        lblName.setFont(new Font("Segoe UI", Font.BOLD, 18));
 
-        panel.add(lblName);
-        panel.add(Box.createVerticalStrut(10));
-        return panel;
+        card.add(lblName);
+        return card;
     }
 
     private JPanel buildContent() {
@@ -70,8 +74,6 @@ public class ProfilePanel extends JPanel {
     public void refresh() {
         lblName.setText(mainFrame.getUsername());
         lblSaldo.setText(CurencyUtill.format(mainFrame.getSaldo()));
-        lblTotalTx.setText(
-                String.valueOf(mainFrame.getTransactions().size())
-        );
+        lblTotalTx.setText(String.valueOf(mainFrame.getTransactions().size()));
     }
 }
