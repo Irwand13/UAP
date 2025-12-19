@@ -49,20 +49,38 @@ public class HomePanel extends JPanel {
         panel.setOpaque(false);
 
         JButton btnAdd = new JButton("➕ Catat Transaksi");
+        btnAdd.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
+        btnAdd.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
         btnAdd.addActionListener(e -> {
-            TransactionDialog dialog =
-                    new TransactionDialog(mainFrame);
+            TransactionDialog dialog = new TransactionDialog(mainFrame);
             dialog.setVisible(true);
         });
 
-        historyPanel = new JPanel();
-        historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
-        historyPanel.setBorder(BorderFactory.createTitledBorder("Transaksi Terakhir"));
-        historyPanel.setOpaque(false);
-
         panel.add(btnAdd);
         panel.add(Box.createVerticalStrut(20));
-        panel.add(historyPanel);
+
+        // CARD Riwayat
+        JPanel card = new JPanel();
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+        card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(220, 220, 220)),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+        ));
+        card.setBackground(Color.WHITE);
+
+        JLabel title = new JLabel("Transaksi Terakhir");
+        title.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+        historyPanel = new JPanel();
+        historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
+        historyPanel.setOpaque(false);
+
+        card.add(title);
+        card.add(Box.createVerticalStrut(10));
+        card.add(historyPanel);
+
+        panel.add(card);
 
         return panel;
     }
@@ -75,14 +93,19 @@ public class HomePanel extends JPanel {
 
         historyPanel.removeAll();
 
-        for (Transaction tx : mainFrame.getLatestTransactions(3)) {
-            JLabel lbl = new JLabel(
-                    (tx.getType().equals("Pemasukan") ? "➕ " : "➖ ")
-                            + tx.getCategory()
-                            + " - "
-                            + CurencyUtill.format(tx.getAmount())
-            );
-            historyPanel.add(lbl);
+        if (mainFrame.getTransactions().isEmpty()) {
+            historyPanel.add(new JLabel("Belum ada transaksi"));
+        } else {
+            for (Transaction tx : mainFrame.getLatestTransactions(3)) {
+                JLabel lbl = new JLabel(
+                        (tx.getType().equals("Pemasukan") ? "➕ " : "➖ ")
+                                + tx.getCategory()
+                                + " - "
+                                + CurencyUtill.format(tx.getAmount())
+                );
+                historyPanel.add(lbl);
+                historyPanel.add(Box.createVerticalStrut(5));
+            }
         }
 
         historyPanel.revalidate();
