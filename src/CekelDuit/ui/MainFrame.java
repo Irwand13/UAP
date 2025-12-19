@@ -11,12 +11,10 @@ import java.util.List;
 
 public class MainFrame extends JFrame {
 
-    private double saldo = 0;
     private HistoryPanel historyPanel;
     private CardLayout cardLayout;
     private JPanel mainPanel;
     private String username = "Pengguna";
-    private final List<Transaction> transactions = new ArrayList<>();
     private HomePanel homePanel;
     private ProfilePanel profilePanel;
     private TransactionPanel transactionPanel;
@@ -24,7 +22,7 @@ public class MainFrame extends JFrame {
 
 
     public MainFrame(User user) {
-        this.user = user;
+        this.user = user ;
         setTitle("CekelDuit");
         setSize(420, 650);
         setLocationRelativeTo(null);
@@ -144,19 +142,6 @@ public class MainFrame extends JFrame {
         historyPanel.update(user);
     }
 
-    // ===== GETTER =====
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public List<Transaction> getLatestTransactions(int limit) {
-        int size = transactions.size();
-        return transactions.subList(Math.max(0, size - limit), size);
-    }
 
     public String getUsername() {
         return username;

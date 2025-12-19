@@ -1,5 +1,6 @@
 package CekelDuit.ui;
 
+import CekelDuit.model.User;
 import CekelDuit.utill.CurencyUtill;
 
 import javax.swing.*;
@@ -72,8 +73,9 @@ public class ProfilePanel extends JPanel {
     }
 
     public void refresh() {
-        lblName.setText(mainFrame.getUsername());
-        lblSaldo.setText(CurencyUtill.format(mainFrame.getSaldo()));
-        lblTotalTx.setText(String.valueOf(mainFrame.getTransactions().size()));
+        User user = mainFrame.getUser();
+        lblName.setText("Nama : " + user.getName());
+        lblSaldo.setText("Saldo : " +CurencyUtill.format(user.getBalance()));
+        lblTotalTx.setText("Total Transaksi : "+ user.getTransactions().size());
     }
 }
