@@ -85,6 +85,8 @@ public class MainFrame extends JFrame {
 
     public void editTransaction(int index) {
         Transaction oldTx = user.getTransactions().get(index);
+        transactionPanel.setMode(oldTx.isIncome());
+        cardLayout.show(mainPanel, "TX");
 
         TransactionDialog dialog =
                 new TransactionDialog(this, oldTx, index);
@@ -171,4 +173,9 @@ public class MainFrame extends JFrame {
     public User getUser() {
         return user;
     }
+    public void showTransactionPanel(boolean isIncome) {
+        transactionPanel.setMode(isIncome);
+        cardLayout.show(mainPanel, "TX");
+    }
+
 }
