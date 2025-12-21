@@ -159,7 +159,12 @@ public class LoginFrame extends JFrame {
         }
 
         User user = UserRepository.load(id, name);
-        new MainFrame(user).setVisible(true);
-        dispose();
+
+        // Tambahkan pengecekan null di sini
+        if (user != null) {
+            new MainFrame(user).setVisible(true);
+            dispose();
+        }
+        // Jika null, tetap di halaman login karena sudah ada pesan error dari Repository
     }
 }
