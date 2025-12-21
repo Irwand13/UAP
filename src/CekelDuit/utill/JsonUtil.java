@@ -14,7 +14,6 @@ public class JsonUtil {
     private static final Gson gson = new Gson();
     private static final Type LIST_TYPE =
             new TypeToken<List<Transaction>>() {}.getType();
-
     public static void write(String path, List<Transaction> data) {
         try (FileWriter writer = new FileWriter(path)) {
             gson.toJson(data, writer);

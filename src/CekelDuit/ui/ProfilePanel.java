@@ -19,7 +19,7 @@ public class ProfilePanel extends JPanel {
     private JLabel lblTargetValue;
 
     // Warna sesuai gambar
-    private final Color PURPLE_THEME = new Color(160, 92, 255);
+    private final Color PURPLE_THEME = new Color(3, 166, 3);
     private final Color BG_COLOR = new Color(248, 249, 253);
     private final Color TEXT_GRAY = new Color(150, 150, 150);
 

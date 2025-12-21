@@ -3,6 +3,7 @@ package CekelDuit.ui;
 import CekelDuit.model.Transaction;
 import CekelDuit.model.User;
 import CekelDuit.utill.CurencyUtill;
+import CekelDuit.utill.DateUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -28,7 +29,7 @@ public class HistoryPanel extends JPanel {
 
     private JScrollPane buildTable() {
         model = new DefaultTableModel(
-                new Object[]{"Tipe", "Kategori", "Nominal", "Catatan"},
+                new Object[]{"tanggal", "Tipe", "Kategori", "Nominal", "Catatan"},
                 0
         ) {
             public boolean isCellEditable(int r, int c) {
@@ -99,6 +100,7 @@ public class HistoryPanel extends JPanel {
 
         for (Transaction tx : user.getTransactions()) {
             model.addRow(new Object[]{
+                    DateUtil.format(tx.CreatedAt()),
                     tx.isIncome() ? "Pemasukan" : "Pengeluaran",
                     tx.getCategory(),
                     CurencyUtill.format(tx.getAmount()),
