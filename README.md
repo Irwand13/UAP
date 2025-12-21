@@ -38,7 +38,3 @@ yyyy-MM-dd HH:mm
 Data disimpan di:
 data/users.json
 
-## Pengembang
-Nama: Irwanda Agus  
-Universitas: Universitas Muhammadiyah Malang  
-Mata Kuliah: Pemrograman Lanjut
